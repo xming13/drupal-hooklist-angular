@@ -1,19 +1,30 @@
-.block-hooklist-angular .content ul {
-  padding-left: 0; /* LTR */
-}
-
-.block-hooklist-angular .content ul li {
-  margin-bottom: 10px;
-  list-style-type: none;
-}
-
 .block-hooklist-angular h2 {
     border-bottom: 1px solid #d6d6d6;
 }
 
-.block-hooklist-angular .hooklist-block-item h2 {
+.block-hooklist-angular .hooklist-hook h2 {
     float: left;
     border: none;
+}
+
+.block-hooklist-angular .panel-search {
+    padding: 10px;
+    border: 5px solid #7DB3FF;
+    background-color: #EDECFF;
+}
+
+.block-hooklist-angular .panel-search ul {
+    padding: 0;
+}
+
+.block-hooklist-angular .hooklist-hook {
+    margin: 10px 0;
+    padding: 15px;
+    background-color: #F1FFFB;
+}
+
+.block-hooklist-angular .category-label {
+    margin-left: 10px;
 }
 
 .block-hooklist-angular .category {
@@ -29,7 +40,7 @@
 .block-hooklist-angular .description {
     margin-top: 10px;
     padding: 10px;
-    background-color: #E1F5FE;
+    background-color: #D4F2FF;
 }
 
 .block-hooklist-angular .tips {
@@ -107,6 +118,10 @@
 .block-hooklist-angular .tips.ng-hide,
 .block-hooklist-angular .sample-code.ng-hide {
     opacity: 0;
+}
+
+.block-hooklist-angular .tags ul {
+    padding: 0;
 }
 
 .block-hooklist-angular .tag {

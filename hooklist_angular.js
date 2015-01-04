@@ -1,5 +1,19 @@
 var hookApp = angular.module('hookApp', ['ngAnimate', 'hljs']);
 
+hookApp.filter('unique', function() {
+    return function(input, key) {
+        var unique = {};
+        var uniqueList = [];
+        for(var i = 0; i < input.length; i++){
+            if(typeof unique[input[i][key]] === "undefined"){
+                unique[input[i][key]] = "";
+                uniqueList.push(input[i]);
+            }
+        }
+        return uniqueList;
+    };
+});
+
 hookApp.controller('HookCtrl', function ($scope, $sce) {
     $scope.filterTags = [
         {name: 'required', selected: true},

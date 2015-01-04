@@ -5,17 +5,25 @@
  */
 ?>
 <div ng-app="hookApp" ng-controller="HookCtrl">
-    Search: <input ng-model="search.name">
+    <div class="panel-search">
+        Hook Name: <input ng-model="search.name">
 
-    <ul>
-        <li ng-repeat="filterTag in filterTags" 
-            ng-click="filter(filterTag)"
-            class="tag filter tag-{{filterTag.name}}" 
-            ng-class="{'selected': filterTag.selected}">{{filterTag.name}}</li>
-    </ul>
+        <span class="category-label">Category:</span>
+        <select ng-model="searchCategory" 
+              ng-options="hook.category as hook.category for hook in hooks  | unique: 'category'">
+            <option value="">-- Choose category --</option>
+        </select>
 
-    <div ng-repeat="hook in hooks | filter: search" ng-hide="hook.hidden"
-         id="{{getValidId(hook.name)}}" class="hooklist-block-item" >
+        <ul>
+            <li ng-repeat="filterTag in filterTags" 
+              ng-click="filter(filterTag)"
+              class="tag filter tag-{{filterTag.name}}" 
+              ng-class="{'selected': filterTag.selected}">{{filterTag.name}}</li>
+        </ul>
+    </div>
+    
+    <div ng-repeat="hook in hooks | filter: search | filter: searchCategory" ng-hide="hook.hidden"
+         id="{{getValidId(hook.name)}}" class="hooklist-hook" >
         <h2><a ng-href="{{hook.url}}" target="_blank">{{hook.name}}</a></h2>
 
         <div class="category">Category: <span class="category-name">{{hook.category}}</span></div>

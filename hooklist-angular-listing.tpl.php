@@ -37,7 +37,7 @@
             </span>
         </div>
 
-        <div class="tips" ng-show="hook.showCode">
+        <div class="tips" ng-show="hook.showCode && hook.tipsArray.length">
             <label>Tips:</label>
             <ul>
                 <li ng-repeat="tip in hook.tipsArray" ng-bind-html="toTrusted(tip)"

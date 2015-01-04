@@ -1,0 +1,6 @@
+name = Hook List (Angular)
+description = Display a summary of commonly used hook list using angular js
+package = Drupal Development Utilities
+core = 7.x
+files[] = hooklist_angular.module
+files[] = hooklist_angular.test

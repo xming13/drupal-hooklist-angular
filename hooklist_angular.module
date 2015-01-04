@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * @file
+ * A module showing list of commonly used hook in Drupal Development.
+ * 
+ * This module provides a block that lists all of the commonly used hook 
+ * in Drupal Development.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function hooklist_angular_help($path, $arg) {
+  if ($path == 'admin/help#hooklist_angular') {
+    return t('Lists commonly used hooks in Drupal Development.');
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function hooklist_angular_block_info() {
+  $blocks = array();
+    
+  $blocks['list_hooks'] = array(
+    'info' => t('A listing of all of the commonly used hooks in Drupal Development. (Angular)'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function hooklist_angular_block_view($block_name = '') {
+  // Create an empty block
+  $block = array(
+    'subject' => '',
+    'content' => '',
+  );
+  
+  switch ($block_name) {
+    case 'list_hooks':
+      // Set the block title.
+      $block['subject'] = t('List of commonly used hooks');
+      
+      // Set the block content
+      $block['content']['listing'] = array(
+        '#theme' => 'hooklist_angular_listing', 
+        '#items' => array(),
+      );
+      
+      // Add highlight CSS file to style the code.
+      $block['content']['#attached']['css'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/highlight.default.css';
+      
+      // Add a CSS file to style the block.
+      $block['content']['#attached']['css'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/hooklist_angular.css';
+      
+      // Add highlight.js for syntax highlighting
+      $block['content']['#attached']['js'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/highlight.pack.js';
+      
+      // Add angular.min.js
+      $block['content']['#attached']['js'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/angular.min.js';
+      
+      // Add angular-animate.js
+      $block['content']['#attached']['js'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/angular-animate.js';
+      
+      // Add angular-highlightjs.min.js
+      $block['content']['#attached']['js'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/angular-highlightjs.min.js';
+      
+      // Add a JS file to handle client side script using angular.
+      $block['content']['#attached']['js'][] = 
+        drupal_get_path('module', 'hooklist_angular') . '/hooklist_angular.js';
+  }
+  
+  return $block;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function hooklist_angular_theme($existing, $type, $theme, $path) {
+  $themes = array(
+    'hooklist_angular_listing' => array(
+      'variables' => array(
+      ),
+      'template' => 'hooklist-angular-listing',
+    ),
+  );
+  
+  return $themes;
+}

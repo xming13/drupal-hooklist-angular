@@ -11,10 +11,11 @@
         <li ng-repeat="filterTag in filterTags" 
             ng-click="filter(filterTag)"
             class="tag filter tag-{{filterTag.name}}" 
-            ng-class="{'selected' : filterTag.selected}">{{filterTag.name}}</li>
+            ng-class="{'selected': filterTag.selected}">{{filterTag.name}}</li>
     </ul>
 
-    <div ng-repeat="hook in hooks| filter: search" class="hooklist-block-item" ng-hide="hook.hidden">
+    <div ng-repeat="hook in hooks | filter: search" ng-hide="hook.hidden"
+         id="{{getValidId(hook.name)}}" class="hooklist-block-item" >
         <h2><a ng-href="{{hook.url}}" target="_blank">{{hook.name}}</a></h2>
 
         <div class="category">Category: <span class="category-name">{{hook.category}}</span></div>

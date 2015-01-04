@@ -115,4 +115,18 @@ hookApp.controller('HookCtrl', function ($scope, $sce) {
     $scope.toTrusted = function (html_code) {
         return $sce.trustAsHtml(html_code);
     };
+    
+    // replace '_' with '-' and substring until first ocurrence of '('
+    // e.g. hookName: hook_help()
+    //        return: hook-help 
+    $scope.getValidId = function(hookName) {
+        var id = hookName;
+        
+        var index = id.indexOf('(');
+        if (index > -1) {
+            id = id.substring(0, index);
+        }
+        
+        return id.split('_').join('-');
+    };
 });

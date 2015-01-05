@@ -1,5 +1,8 @@
-/*
- * use the following template to add a new hook in $scope.hooks
+/**
+ * @file
+ * Javascript for angular implementation.
+ * 
+ * Use the following template to add a new hook in $scope.hooks
  * {
      name: '',
      url: '',
@@ -9,7 +12,7 @@
      tagsArray: [],
      sampleCode: ""
    }
- */
+*/
 
 var hookApp = angular.module('hookApp', ['ngAnimate', 'hljs']);
 

@@ -139,6 +139,10 @@
     cursor: pointer;
 }
 
+.block-hooklist-angular .tag.selected {
+    background-color: #FF6D00;    
+}
+
 .block-hooklist-angular .tag-required.selected {
     background-color: #D50000;
 }

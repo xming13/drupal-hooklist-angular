@@ -35,7 +35,10 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
         {name: 'required', selected: true},
         {name: 'optional', selected: true},
         {name: 'info', selected: true},
-        {name: 'debug', selected: true}
+        {name: 'debug', selected: true},
+        {name: 'mail', selected: true},
+        {name: 'form', selected: true},
+        {name: 'menu', selected: true}
     ];
 
     $scope.hooks = [
@@ -213,6 +216,110 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             sampleCode:
                     "function example_css_alter(&$css) {\n"
                     + "  unset($css[drupal_get_path('module', 'system') . '/system.css']);\n"
+                    + "}"
+        },
+        {
+            name: 'hook_menu()',
+            url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_menu/7',
+            description: 'This returns a structured associative array with information about the menu items being defined.',
+            tipsArray: [],
+            category: 'System',
+            tagsArray: ['menu'],
+            sampleCode: 
+                    "/**\n"
+                    + " * Implement hook_menu().\n"
+                    + " */\n"
+                    + "function user_warn_menu() {\n"
+                    + "  $items = array();\n\n"
+            
+                    + "  $items['admin/config/people/user_warn'] = array(\n"
+                    + "    'title' => 'User Warn',\n"
+                    + "    'description' => 'Configuration for the User Warn module.',\n"
+                    + "    'page callback' => 'drupal_get_form',\n"
+                    + "    'page arguments' => array('user_warn_form'),\n"
+                    + "    'access arguments' => array('administer users'),\n"
+                    + "    'type' => MENU_NORMAL_ITEM,\n"
+                    + "  );\n\n"
+
+                    + "  $items['user/%/warn'] = array(\n"
+                    + "    'title' => 'Warn',\n"
+                    + "    'description' => 'Send e-mail to a user about improper site behavior.',\n"
+                    + "    'page callback' => 'drupal_get_form',\n"
+                    + "    'page arguments' => array('user_warn_confirm_form', 1),\n"
+                    + "    'access arguments' => array('administer users'),\n"
+                    + "    'type' => MENU_LOCAL_TASK,\n"
+                    + "  );\n\n"
+            
+                    + "  return $items;\n"
+                    + "}"
+        },
+        {
+            name: 'drupal_get_form()',
+            url: 'https://api.drupal.org/api/drupal/includes!form.inc/function/drupal_get_form/7',
+            description: 'This function returns a structured array that represents an HTML form.',
+            tipsArray: ['Returns an unrendered form array which must be passed to drupal_render().'],
+            category: 'Form',
+            tagsArray: ['form'],
+            sampleCode: 
+                    "/**\n"
+                    + " * Snippets from user_warn_menu (hook_menu) which calls drupal_get_form for 'page callback', \n"
+                    + " * note that arguments are passed using 'page arguments'\n"
+                    + " */\n"
+                    + "$items['user/%/warn'] = array(\n"
+                    + "  'title' => 'Warn',\n"
+                    + "  'description' => 'Send e-mail to a user about improper site behavior.',\n"
+                    + "  'page callback' => 'drupal_get_form',\n"
+                    + "  'page arguments' => array('user_warn_confirm_form', 1),\n"
+                    + "  'access arguments' => array('administer users'),\n"
+                    + "  'type' => MENU_LOCAL_TASK,\n"
+                    + ");\n\n"
+                    
+                    + "/**\n"
+                    + " * Form builder; display the e-mail confirmation form.\n"
+                    + " */\n"
+                    + "function user_warn_confirm_form($form, &$form_state, $uid) {\n"
+                    + "  $form['account'] = array(\n"
+                    + "    '#type' => 'value',\n"
+                    + "    '#value' => user_load($uid),\n"
+                    + "  );\n"
+                    + "  return confirm_form(\n"
+                    + "    $form,\n"
+                    + "    t('Are you sure you want to send a warning e-mail to this user?'),\n"
+                    + "    'user/' . $uid,\n"
+                    + "    t('This action can not be undone.'),\n"
+                    + "    t('Send e-mail'),\n"
+                    + "    t('Cancel')\n"
+                    + "  );\n"
+                    + "}"
+        },
+        {
+            name: 'hook_mail()',
+            url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_mail/7',
+            description: 'Prepare a message based on parameters; called from drupal_mail().',
+            tipsArray: [],
+            category: 'System',
+            tagsArray: ['mail'],
+            sampleCode: 
+                    "/**\n"
+                    + " * Implement hook_mail().\n"
+                    + " */\n"
+                    + "function user_warn_mail($key, &$message, $params) {\n"
+                    + "  switch ($key) {\n"
+                    + "    case 'warn':\n"
+                    + "      $account = $params['account'];\n"
+                    + "      $subject = variable_get('user_warn_e-mail_subject', 'Administrative Warning');\n"
+                    + "      $body = variable_get('user_warn_e-mail_text', 'You\\'ve been warned!');\n\n"
+            
+                    + "      if (variable_get('user_warn_bcc', FALSE)) {\n"
+                    + "        $admin_mail = variable_get('site_mail', NULL);\n"
+                    + "        $message['headers']['bcc'] = $admin_mail;\n"
+                    + "      }\n\n"
+            
+                    + "      $message['to'] = $account->mail;\n"
+                    + "      $message['subject'] = $subject;\n"
+                    + "      $message['body'][] = $body;\n"
+                    + "      break;\n"
+                    + "  }\n"
                     + "}"
         }
     ];

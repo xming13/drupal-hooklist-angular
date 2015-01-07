@@ -370,6 +370,14 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
         return id.split('_').join('-');
     };
 
+    // to handle showing all hooks if no category is selected for the filter
+    $scope.filterCheck = function(actual, expected) {
+        if (expected === null) {
+            return true;
+        }
+        return angular.equals(actual, expected); 
+    }
+    
     // smooth scrolling for anchor link
     angular.element(document).ready(function() {
         jQuery('a[href*=#]').click(function(event) {

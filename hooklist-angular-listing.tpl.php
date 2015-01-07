@@ -9,8 +9,8 @@
         Hook Name: <input ng-model="search.name">
 
         <span class="category-label">Category:</span>
-        <select ng-model="searchCategory.category" 
-              ng-options="hook.category as hook.category for hook in hooks  | unique: 'category'">
+        <select ng-model="search.category" 
+              ng-options="hook.category as hook.category for hook in hooks | unique: 'category'">
             <option value="">-- Choose category --</option>
         </select>
 
@@ -22,7 +22,7 @@
         </ul>
     </div>
     
-    <div ng-repeat="hook in hooks | filter: search | filter: searchCategory" ng-hide="hook.hidden"
+    <div ng-repeat="hook in hooks | filter:search:filterCheck" ng-hide="hook.hidden"
          id="{{getValidId(hook.name)}}" class="hooklist-hook" >
         <h2><a ng-href="{{hook.url}}" target="_blank">{{hook.name}}</a></h2>
 

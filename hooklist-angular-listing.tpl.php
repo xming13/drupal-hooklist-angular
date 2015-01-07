@@ -9,7 +9,7 @@
         Hook Name: <input ng-model="search.name">
 
         <span class="category-label">Category:</span>
-        <select ng-model="searchCategory" 
+        <select ng-model="searchCategory.category" 
               ng-options="hook.category as hook.category for hook in hooks  | unique: 'category'">
             <option value="">-- Choose category --</option>
         </select>
@@ -37,10 +37,10 @@
             </span>
         </div>
 
-        <div class="tips" ng-show="hook.showCode && hook.tipsArray.length">
+        <div class="tips" ng-show="hook.showCode && hook.tipArray.length">
             <label>Tips:</label>
             <ul>
-                <li ng-repeat="tip in hook.tipsArray" ng-bind-html="toTrusted(tip)"
+                <li ng-repeat="tip in hook.tipArray" ng-bind-html="toTrusted(tip)"
                     ng-class="{'first': $first, 'last': $last}">
                 </li>
             </ul>
@@ -53,7 +53,7 @@
 
         <div class="tags">
             <ul>
-                <li ng-repeat="tagName in hook.tagsArray" 
+                <li ng-repeat="tagName in hook.tagArray" 
                     class="selected tag tag-{{tagName}}">{{tagName}}</li> 
             </ul>
         </div>

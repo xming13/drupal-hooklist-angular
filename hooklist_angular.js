@@ -7,9 +7,9 @@
      name: '',
      url: '',
      description: '',
-     tipsArray: [],
+     tipArray: [],
      category: '',
-     tagsArray: [],
+     tagArray: [],
      sampleCode: ""
    }
 */
@@ -46,7 +46,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_help()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_help/7',
             description: 'Provides online user help.',
-            tipsArray: [
+            tipArray: [
                 'Provides help text for the module by checking if the <em>$path</em> \n\
                  is equal to \'admin\help<em>#MODULE_NAME</em>\', \n\
                  where <em>#MODULE_NAME</em> is the \n\
@@ -56,7 +56,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  for localized text.',
             ],
             category: 'System',
-            tagsArray: ['optional', 'info'],
+            tagArray: ['optional', 'info'],
             sampleCode:
                     "function first_help($path, $args) {\n"
                     + "  if ($path == 'admin/help#first') {\n"
@@ -68,7 +68,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_block_info()',
             url: 'https://api.drupal.org/api/drupal/modules!block!block.api.php/function/hook_block_info/7',
             description: 'Defines all blocks provided by the module.',
-            tipsArray: [
+            tipArray: [
                 'This hook declares to Drupal what blocks are provided by your module \n\
                  and can optionally specify initial block configuration settings.',
                 'Each block your module provides is given a \n\
@@ -83,7 +83,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  visibility (optional), pages (optional).'
             ],
             category: 'Block',
-            tagsArray: ['required'],
+            tagArray: ['required'],
             sampleCode:
                     "function first_block_info() {\n"
                     + "  $blocks = array();\n\n"
@@ -98,7 +98,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_block_view()',
             url: 'https://api.drupal.org/api/drupal/modules!block!block.api.php/function/hook_block_view/7',
             description: 'Returns a rendered or renderable view of a block.',
-            tipsArray: [
+            tipArray: [
                 'Use switch case to check <em>$delta</em> with the keys defined \n\
                  in the array returned by \n\
                  <a href="#hook-block-info">hook_block_info()</a> to determine which \n\
@@ -107,7 +107,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  key \'subject\' and \'content\'.'
             ],
             category: 'Block',
-            tagsArray: ['required'],
+            tagArray: ['required'],
             sampleCode:
                     "function first_block_view($delta = '') {\n"
                     + "  $block = array();\n\n"
@@ -127,7 +127,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_library()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_library/7',
             description: 'Registers JavaScript/CSS libraries associated with a module.',
-            tipsArray: [
+            tipArray: [
                 'When a module has a library or plugin it wants to use or make available \n\
                  to other libraries, it should define it as a library using \n\
                  hook_library().',
@@ -137,7 +137,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  \'css\', \'dependencies\''
             ],
             category: 'System',
-            tagsArray: ['optional'],
+            tagArray: ['optional'],
             sampleCode:
                     "function hello_world_library() {\n"
                     + "  $path = drupal_get_path('module', 'hello_world');\n"
@@ -163,13 +163,13 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_library_alter()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_library_alter/7',
             description: 'Alters the JavaScript/CSS library registry.',
-            tipsArray: [
+            tipArray: [
                 'This function intercepts the libraries defined by <a href="#hook-library">hook_library()</a> \n\
                  and either act or make changes to them.',
                 'A use case will be another module providing a more recent version of the javascript.'
             ],
             category: 'System',
-            tagsArray: ['optional'],
+            tagArray: ['optional'],
             sampleCode:
                     "function hello_world_library_alter(&$libraries, $module) {\n"
                     + "  if ($module == 'hello_world' &&\n"
@@ -190,13 +190,13 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_js_alter()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_js_alter/7',
             description: 'Perform necessary alterations to the JavaScript before it is presented on the page.',
-            tipsArray: [
+            tipArray: [
                 'The parameter <em>&$javascript</em> should be passed by reference.',
                 'A use case of this hook will be to swap out the compressed version of jQuery \n\
                  with an uncompressed version for debugging purposes.'
             ],
             category: 'System',
-            tagsArray: ['optional', 'debug'],
+            tagArray: ['optional', 'debug'],
             sampleCode:
                     "function jquery_uncompressed_js_alter(&$javascript) {\n"
                     + "  $path = drupal_get_path('module', 'jquery_uncompressed')\n"
@@ -207,12 +207,12 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_css_alter()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_css_alter/7',
             description: 'Alter CSS files before they are output on the page.',
-            tipsArray: [
+            tipArray: [
                 'The parameter <em>&$css</em> should be passed by reference.',
                 'A use case of this hook will be to remove the <em>system.css</em> file provided by core.'
             ],
             category: 'System',
-            tagsArray: ['optional'],
+            tagArray: ['optional'],
             sampleCode:
                     "function example_css_alter(&$css) {\n"
                     + "  unset($css[drupal_get_path('module', 'system') . '/system.css']);\n"
@@ -222,9 +222,9 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_menu()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_menu/7',
             description: 'This returns a structured associative array with information about the menu items being defined.',
-            tipsArray: [],
+            tipArray: [],
             category: 'System',
-            tagsArray: ['menu'],
+            tagArray: ['menu'],
             sampleCode: 
                     "/**\n"
                     + " * Implement hook_menu().\n"
@@ -257,22 +257,28 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'drupal_get_form()',
             url: 'https://api.drupal.org/api/drupal/includes!form.inc/function/drupal_get_form/7',
             description: 'This function returns a structured array that represents an HTML form.',
-            tipsArray: ['Returns an unrendered form array which must be passed to drupal_render().'],
+            tipArray: ['Returns an unrendered form array which must be passed to drupal_render().'],
             category: 'Form',
-            tagsArray: ['form'],
+            tagArray: ['form'],
             sampleCode: 
                     "/**\n"
-                    + " * Snippets from user_warn_menu (hook_menu) which calls drupal_get_form for 'page callback', \n"
-                    + " * note that arguments are passed using 'page arguments'\n"
+                    + " * Code snippets from user_warn_menu (hook_menu) which has 'drupal_get_form' as 'page callback', \n"
+                    + " * Note that arguments are passed using 'page arguments'\n"
+                    + " * The first argument is the FORM_ID and is required.\n"
                     + " */\n"
-                    + "$items['user/%/warn'] = array(\n"
-                    + "  'title' => 'Warn',\n"
-                    + "  'description' => 'Send e-mail to a user about improper site behavior.',\n"
-                    + "  'page callback' => 'drupal_get_form',\n"
-                    + "  'page arguments' => array('user_warn_confirm_form', 1),\n"
-                    + "  'access arguments' => array('administer users'),\n"
-                    + "  'type' => MENU_LOCAL_TASK,\n"
-                    + ");\n\n"
+                    + "function user_warn_menu() {\n"
+                    + "  ... // omitted \n\n"
+                    + "  $items['user/%/warn'] = array(\n"
+                    + "    'title' => 'Warn',\n"
+                    + "    'description' => 'Send e-mail to a user about improper site behavior.',\n"
+                    + "    'page callback' => 'drupal_get_form',\n"
+                    + "    'page arguments' => array('user_warn_confirm_form', 1),\n"
+                    + "    'access arguments' => array('administer users'),\n"
+                    + "    'type' => MENU_LOCAL_TASK,\n"
+                    + "  );\n\n"
+            
+                    + "  ... //omitted \n"
+                    + "}\n\n"
                     
                     + "/**\n"
                     + " * Form builder; display the e-mail confirmation form.\n"
@@ -285,7 +291,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                     + "  return confirm_form(\n"
                     + "    $form,\n"
                     + "    t('Are you sure you want to send a warning e-mail to this user?'),\n"
-                    + "    'user/' . $uid,\n"
+                    + "      'user/' . $uid,\n"
                     + "    t('This action can not be undone.'),\n"
                     + "    t('Send e-mail'),\n"
                     + "    t('Cancel')\n"
@@ -296,9 +302,9 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             name: 'hook_mail()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_mail/7',
             description: 'Prepare a message based on parameters; called from drupal_mail().',
-            tipsArray: [],
+            tipArray: [],
             category: 'System',
-            tagsArray: ['mail'],
+            tagArray: ['mail'],
             sampleCode: 
                     "/**\n"
                     + " * Implement hook_mail().\n"
@@ -337,7 +343,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                 var tag = $scope.filterTags[j];
 
                 // match so we set it to visible and break the loop
-                if (tag.selected && hook.tagsArray.indexOf(tag.name) !== -1) {
+                if (tag.selected && hook.tagArray.indexOf(tag.name) !== -1) {
                     hook.hidden = false;
                     break;
                 }

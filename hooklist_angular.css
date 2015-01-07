@@ -20,6 +20,7 @@
 .block-hooklist-angular .hooklist-hook {
     margin: 10px 0;
     padding: 15px;
+    border: 1px solid #EFD7FF;
     background-color: #F1FFFB;
 }
 

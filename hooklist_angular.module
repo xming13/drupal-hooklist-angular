@@ -79,17 +79,26 @@ function hooklist_angular_page_item_json($item){
  *   The array containing the useful values from 
  */
 function hooklist_angular_page_item_array($item){
-  $wrapper = entity_metadata_wrapper('node', $item); dpm($wrapper, '$wrapper');
+  $wrapper = entity_metadata_wrapper('node', $item);
   
-  $tag_names = array();
+  $tip_array = array();
+  foreach ($wrapper->field_tips as $tip) {
+    $tip_array[] = $tip->value()['value'];
+  }
+  
+  $tag_array = array();
   foreach($wrapper->field_item_tags as $tag){
-    $tag_names[] = $tag->label();
+    $tag_array[] = $tag->label();
   }
   
   $item_array = array(
+    'name' => $wrapper->label(),
     'url' => $wrapper->field_url->value(),
     'description' => $wrapper->field_description->value(),
-    'tag_names' => $tag_names,
+    'category' => $wrapper->field_category->label(),
+    'tipArray' => $tip_array,
+    'tagArray' => $tag_array,
+    'sampleCode' => $wrapper->field_sample_code->value()['value'],
   );
   
   return $item_array;

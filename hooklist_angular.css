@@ -151,11 +151,11 @@
     background-color: #64DD17;
 }
 
-.block-hooklist-angular .tag-info.selected {
+.block-hooklist-angular .tag-hook.selected {
     background-color: #2962FF;
 }
 
-.block-hooklist-angular .tag-debug.selected {
+.block-hooklist-angular .tag-function.selected {
     background-color: #FFAB00;
 }
 

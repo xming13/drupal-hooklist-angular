@@ -34,8 +34,8 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
     $scope.filterTags = [
         {name: 'required', selected: true},
         {name: 'optional', selected: true},
-        {name: 'info', selected: true},
-        {name: 'debug', selected: true},
+        {name: 'hook', selected: true},
+        {name: 'function', selected: true},
         {name: 'mail', selected: true},
         {name: 'form', selected: true},
         {name: 'menu', selected: true}
@@ -56,7 +56,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  for localized text.',
             ],
             category: 'System',
-            tagArray: ['optional', 'info'],
+            tagArray: ['optional', 'hook'],
             sampleCode:
                     "function first_help($path, $args) {\n"
                     + "  if ($path == 'admin/help#first') {\n"
@@ -83,7 +83,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  visibility (optional), pages (optional).'
             ],
             category: 'Block',
-            tagArray: ['required'],
+            tagArray: ['required', 'hook'],
             sampleCode:
                     "function first_block_info() {\n"
                     + "  $blocks = array();\n\n"
@@ -107,7 +107,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  key \'subject\' and \'content\'.'
             ],
             category: 'Block',
-            tagArray: ['required'],
+            tagArray: ['required', 'hook'],
             sampleCode:
                     "function first_block_view($delta = '') {\n"
                     + "  $block = array();\n\n"
@@ -137,7 +137,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  \'css\', \'dependencies\''
             ],
             category: 'System',
-            tagArray: ['optional'],
+            tagArray: ['optional', 'hook'],
             sampleCode:
                     "function hello_world_library() {\n"
                     + "  $path = drupal_get_path('module', 'hello_world');\n"
@@ -169,7 +169,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                 'A use case will be another module providing a more recent version of the javascript.'
             ],
             category: 'System',
-            tagArray: ['optional'],
+            tagArray: ['optional', 'hook'],
             sampleCode:
                     "function hello_world_library_alter(&$libraries, $module) {\n"
                     + "  if ($module == 'hello_world' &&\n"
@@ -196,7 +196,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                  with an uncompressed version for debugging purposes.'
             ],
             category: 'System',
-            tagArray: ['optional', 'debug'],
+            tagArray: ['optional', 'hook'],
             sampleCode:
                     "function jquery_uncompressed_js_alter(&$javascript) {\n"
                     + "  $path = drupal_get_path('module', 'jquery_uncompressed')\n"
@@ -212,7 +212,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                 'A use case of this hook will be to remove the <em>system.css</em> file provided by core.'
             ],
             category: 'System',
-            tagArray: ['optional'],
+            tagArray: ['optional', 'hook'],
             sampleCode:
                     "function example_css_alter(&$css) {\n"
                     + "  unset($css[drupal_get_path('module', 'system') . '/system.css']);\n"
@@ -224,7 +224,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             description: 'This returns a structured associative array with information about the menu items being defined.',
             tipArray: [],
             category: 'System',
-            tagArray: ['menu'],
+            tagArray: ['menu', 'hook'],
             sampleCode: 
                     "/**\n"
                     + " * Implement hook_menu().\n"
@@ -259,7 +259,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             description: 'This function returns a structured array that represents an HTML form.',
             tipArray: ['Returns an unrendered form array which must be passed to drupal_render().'],
             category: 'Form',
-            tagArray: ['form'],
+            tagArray: ['form', 'function'],
             sampleCode: 
                     "/**\n"
                     + " * Code snippets from user_warn_menu (hook_menu) which has 'drupal_get_form' as 'page callback', \n"
@@ -304,7 +304,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
             description: 'Prepare a message based on parameters; called from drupal_mail().',
             tipArray: [],
             category: 'System',
-            tagArray: ['mail'],
+            tagArray: ['mail', 'hook'],
             sampleCode: 
                     "/**\n"
                     + " * Implement hook_mail().\n"

@@ -241,11 +241,12 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                     + "    'type' => MENU_NORMAL_ITEM,\n"
                     + "  );\n\n"
 
+                    + "  // Using wildcards (%) in menu paths\n"
                     + "  $items['user/%/warn'] = array(\n"
                     + "    'title' => 'Warn',\n"
                     + "    'description' => 'Send e-mail to a user about improper site behavior.',\n"
                     + "    'page callback' => 'drupal_get_form',\n"
-                    + "    'page arguments' => array('user_warn_confirm_form', 1),\n"
+                    + "    'page arguments' => array('user_warn_confirm_form', 1), // 0: user, 1: %, 2: warn\n"
                     + "    'access arguments' => array('administer users'),\n"
                     + "    'type' => MENU_LOCAL_TASK,\n"
                     + "  );\n\n"
@@ -272,7 +273,7 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                     + "    'title' => 'Warn',\n"
                     + "    'description' => 'Send e-mail to a user about improper site behavior.',\n"
                     + "    'page callback' => 'drupal_get_form',\n"
-                    + "    'page arguments' => array('user_warn_confirm_form', 1),\n"
+                    + "    'page arguments' => array('user_warn_confirm_form', 1), // 0: user, 1: %, 2: warn\n"
                     + "    'access arguments' => array('administer users'),\n"
                     + "    'type' => MENU_LOCAL_TASK,\n"
                     + "  );\n\n"
@@ -285,6 +286,9 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                     + " */\n"
                     + "function user_warn_confirm_form($form, &$form_state, $uid) {\n"
                     + "  $form['account'] = array(\n"
+                    + "     // Elements of '#type' => 'value' can store any data e.g. arrays, objects, or\n"
+                    + "     // any other complex data structure and will not be printed to browser in the\n"
+                    + "     // HTML source.\n"
                     + "    '#type' => 'value',\n"
                     + "    '#value' => user_load($uid),\n"
                     + "  );\n"
@@ -299,12 +303,44 @@ hookApp.controller('HookCtrl', function($scope, $sce) {
                     + "}"
         },
         {
+            name: 'system_settings_form()',
+            url: '',
+            description: '',
+            tipArray: [
+                'This function automatically adds a submit button element so you do not have to implement one.',
+                'This function uses its own custom submit handler <em>system_settings_form_submit()</em>, which automatically saves all the form elements into persistent varaibles of the same name.'
+            ],
+            category: 'System',
+            tagArray: ['function', 'form'],
+            sampleCode:
+                    "/**\n"
+                    + " * Form builder; Build the User Warn settings form.\n"
+                    + " */\n"
+                    + "function user_warn_form($form, &$form_state) {\n"
+                    + "  // Text field for the e-mail subject.\n"
+                    + "  $form['user_warn_e-mail_subject'] = array(\n"
+                    + "    '#type' => 'textfield',\n"
+                    + "    '#default_value' => 'Administrative Warning',\n"
+                    + "    '#title' => t('Warning e-mail subject'),\n"
+                    + "    '#size' => 40,\n"
+                    + "    '#maxlength' => 120,\n"
+                    + "    '#required' => TRUE,\n"
+                    + "    '#description' => t(\n"
+                    + "      'The subject of the e-mail which will be sent to users.'),\n"
+                    + "    );\n\n"
+
+                    + "  ... // omitted other form elements\n\n"
+            
+                    + "  return system_settings_form($form);\n"
+                    + "}\n"
+        },
+        {
             name: 'hook_mail()',
             url: 'https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_mail/7',
             description: 'Prepare a message based on parameters; called from drupal_mail().',
             tipArray: [],
             category: 'System',
-            tagArray: ['mail', 'hook'],
+            tagArray: ['hook', 'mail'],
             sampleCode: 
                     "/**\n"
                     + " * Implement hook_mail().\n"

@@ -18,6 +18,105 @@ function hooklist_angular_help($path, $arg) {
 }
 
 /**
+ * Implements hook_menu()
+ */
+function hooklist_angular_menu() {
+  $items['items/json'] = array(
+      'type' => MENU_CALLBACK,
+      'page callback' => 'hooklist_angular_page_items_json',
+      'access callback' => TRUE,
+  );
+  $items['item/%node/json'] = array(
+      'type' => MENU_CALLBACK,
+      'page callback' => 'hooklist_angular_page_item_json',
+      'page arguments' => array(1),
+      'access callback' => TRUE,
+  );
+  
+  return $items;
+}
+
+/**
+ * Page callback to return a JSON array of all common items in the system.
+ */
+function hooklist_angular_page_items_json(){
+  $query = new EntityFieldQuery();
+
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'common_item')
+    ->propertyCondition('status', NODE_PUBLISHED);
+
+  $result = $query->execute();
+
+  $items_array = array();
+
+  if (isset($result['node'])) {
+    $items_ids = array_keys($result['node']);
+    
+    $items = node_load_multiple($items_ids);
+  
+    foreach($items as $item){
+      $item_array = hooklist_angular_page_item_array($item);
+      $items_array[] = $item_array;
+    }
+  }
+
+  drupal_json_output($items_array);
+}
+
+function hooklist_angular_page_item_json($item){
+  $item_array = hooklist_angular_page_item_array($item);
+  drupal_json_output($item_array);
+}
+
+/**
+ * Returns an array representing a common item.
+ * 
+ * @param object $item
+ *   The common item node.
+ * 
+ * @return array
+ *   The array containing the useful values from 
+ */
+function hooklist_angular_page_item_array($item){
+  $wrapper = entity_metadata_wrapper('node', $item); dpm($wrapper, '$wrapper');
+  
+  $tag_names = array();
+  foreach($wrapper->field_item_tags as $tag){
+    $tag_names[] = $tag->label();
+  }
+  
+  $item_array = array(
+    'url' => $wrapper->field_url->value(),
+    'description' => $wrapper->field_description->value(),
+    'tag_names' => $tag_names,
+  );
+  
+  return $item_array;
+  
+  // Classic PHP method
+  /*
+  $tags = $item->field_item_tags['und'];
+  $tag_names = array();
+  foreach ($tags as $tag) {
+    $tag1 = taxonomy_term_load($tag['tid']); //dpm($tag1, '$tag1');
+    $tag_names[] = $tag1->name;
+  }
+  
+  //dpm($tag_names);
+  
+  $item_array = array(
+    'url' => $item->field_url[LANGUAGE_NONE][0]['value'],
+    'description' => $item->field_description['und'][0]['value'],
+    'tag_names' => $tag_names,
+      
+  ); //dpm($item_array, '$item_array');
+  
+  return $item_array;
+  */
+}
+
+/**
  * Implements hook_block_info().
  */
 function hooklist_angular_block_info() {

@@ -83,7 +83,7 @@ function hooklist_angular_page_item_array($item){
   
   $tip_array = array();
   foreach ($wrapper->field_tips as $tip) {
-    $tip_array[] = $tip->value()['value'];
+    $tip_array[] = $tip->value();
   }
   
   $tag_array = array();
@@ -98,7 +98,7 @@ function hooklist_angular_page_item_array($item){
     'category' => $wrapper->field_category->label(),
     'tipArray' => $tip_array,
     'tagArray' => $tag_array,
-    'sampleCode' => $wrapper->field_sample_code->value()['value'],
+    'sampleCode' => $wrapper->field_sample_code->value(),
   );
   
   return $item_array;

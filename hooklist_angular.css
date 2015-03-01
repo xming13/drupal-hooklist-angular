@@ -15,6 +15,7 @@
 
 .block-hooklist-angular .panel-search ul {
     padding: 0;
+    margin: 10px 0 0 0;
 }
 
 .block-hooklist-angular .hooklist-hook {
@@ -89,6 +90,10 @@
 
 .block-hooklist-angular .sample-code pre {
     margin: 0;
+    background: #E8D9FF;
+    padding: 15px;
+    line-height: inherit;
+    border: none;
 }
 
 .block-hooklist-angular .tips.ng-hide-add, 
@@ -121,8 +126,13 @@
     opacity: 0;
 }
 
+.block-hooklist-angular .tags {
+    margin-top: 10px;
+}
+
 .block-hooklist-angular .tags ul {
     padding: 0;
+    margin: 0;
 }
 
 .block-hooklist-angular .tag {

@@ -46,7 +46,7 @@ hookApp.controller('HookCtrl', function($scope, $http, $sce) {
         {name: 'menu', selected: true}
     ];
 
-    $http.get('/drupal/items/json')
+    $http.get('/items/json')
         .success(function(data, status, headers, config) {
             console.log(data);
             $scope.hooks = data;

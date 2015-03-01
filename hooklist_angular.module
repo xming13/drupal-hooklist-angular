@@ -22,29 +22,29 @@ function hooklist_angular_help($path, $arg) {
  */
 function hooklist_angular_menu() {
   $items['items/json'] = array(
-      'type' => MENU_CALLBACK,
-      'page callback' => 'hooklist_angular_page_items_json',
-      'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page callback' => 'hooklist_angular_page_items_json',
+    'access callback' => TRUE,
   );
   $items['item/%node/json'] = array(
-      'type' => MENU_CALLBACK,
-      'page callback' => 'hooklist_angular_page_item_json',
-      'page arguments' => array(1),
-      'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page callback' => 'hooklist_angular_page_item_json',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
   );
-  
+
   return $items;
 }
 
 /**
  * Page callback to return a JSON array of all common items in the system.
  */
-function hooklist_angular_page_items_json(){
+function hooklist_angular_page_items_json() {
   $query = new EntityFieldQuery();
 
   $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'common_item')
-    ->propertyCondition('status', NODE_PUBLISHED);
+      ->entityCondition('bundle', 'common_item')
+      ->propertyCondition('status', NODE_PUBLISHED);
 
   $result = $query->execute();
 
@@ -52,10 +52,10 @@ function hooklist_angular_page_items_json(){
 
   if (isset($result['node'])) {
     $items_ids = array_keys($result['node']);
-    
+
     $items = node_load_multiple($items_ids);
-  
-    foreach($items as $item){
+
+    foreach ($items as $item) {
       $item_array = hooklist_angular_page_item_array($item);
       $items_array[] = $item_array;
     }
@@ -64,7 +64,7 @@ function hooklist_angular_page_items_json(){
   drupal_json_output($items_array);
 }
 
-function hooklist_angular_page_item_json($item){
+function hooklist_angular_page_item_json($item) {
   $item_array = hooklist_angular_page_item_array($item);
   drupal_json_output($item_array);
 }
@@ -78,19 +78,19 @@ function hooklist_angular_page_item_json($item){
  * @return array
  *   The array containing the useful values from 
  */
-function hooklist_angular_page_item_array($item){
+function hooklist_angular_page_item_array($item) {
   $wrapper = entity_metadata_wrapper('node', $item);
-  
+
   $tip_array = array();
   foreach ($wrapper->field_tips as $tip) {
     $tip_array[] = $tip->value();
   }
-  
+
   $tag_array = array();
-  foreach($wrapper->field_item_tags as $tag){
+  foreach ($wrapper->field_item_tags as $tag) {
     $tag_array[] = $tag->label();
   }
-  
+
   $item_array = array(
     'name' => $wrapper->label(),
     'url' => $wrapper->field_url->value(),
@@ -100,29 +100,29 @@ function hooklist_angular_page_item_array($item){
     'tagArray' => $tag_array,
     'sampleCode' => $wrapper->field_sample_code->value(),
   );
-  
+
   return $item_array;
-  
+
   // Classic PHP method
   /*
-  $tags = $item->field_item_tags['und'];
-  $tag_names = array();
-  foreach ($tags as $tag) {
+    $tags = $item->field_item_tags['und'];
+    $tag_names = array();
+    foreach ($tags as $tag) {
     $tag1 = taxonomy_term_load($tag['tid']); //dpm($tag1, '$tag1');
     $tag_names[] = $tag1->name;
-  }
-  
-  //dpm($tag_names);
-  
-  $item_array = array(
+    }
+
+    //dpm($tag_names);
+
+    $item_array = array(
     'url' => $item->field_url[LANGUAGE_NONE][0]['value'],
     'description' => $item->field_description['und'][0]['value'],
     'tag_names' => $tag_names,
-      
-  ); //dpm($item_array, '$item_array');
-  
-  return $item_array;
-  */
+
+    ); //dpm($item_array, '$item_array');
+
+    return $item_array;
+   */
 }
 
 /**
@@ -130,12 +130,12 @@ function hooklist_angular_page_item_array($item){
  */
 function hooklist_angular_block_info() {
   $blocks = array();
-    
+
   $blocks['list_hooks'] = array(
     'info' => t('A listing of all of the commonly used hooks in Drupal Development. (Angular)'),
     'cache' => DRUPAL_NO_CACHE,
   );
-  
+
   return $blocks;
 }
 
@@ -148,47 +148,40 @@ function hooklist_angular_block_view($block_name = '') {
     'subject' => '',
     'content' => '',
   );
-  
+
   switch ($block_name) {
     case 'list_hooks':
       // Set the block title.
       $block['subject'] = t('List of commonly used hooks');
-      
+
       // Set the block content
       $block['content']['listing'] = array(
-        '#theme' => 'hooklist_angular_listing', 
+        '#theme' => 'hooklist_angular_listing',
         '#items' => array(),
       );
-      
+
       // Add highlight CSS file to style the code.
-      $block['content']['#attached']['css'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/highlight.default.css';
-      
+      $block['content']['#attached']['css'][] = drupal_get_path('module', 'hooklist_angular') . '/highlight.default.css';
+
       // Add a CSS file to style the block.
-      $block['content']['#attached']['css'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/hooklist_angular.css';
-      
+      $block['content']['#attached']['css'][] = drupal_get_path('module', 'hooklist_angular') . '/hooklist_angular.css';
+
       // Add highlight.js for syntax highlighting
-      $block['content']['#attached']['js'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/highlight.pack.js';
-      
+      $block['content']['#attached']['js'][] = drupal_get_path('module', 'hooklist_angular') . '/highlight.pack.js';
+
       // Add angular.min.js
-      $block['content']['#attached']['js'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/angular.min.js';
-      
+      $block['content']['#attached']['js'][] = drupal_get_path('module', 'hooklist_angular') . '/angular.min.js';
+
       // Add angular-animate.js
-      $block['content']['#attached']['js'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/angular-animate.js';
-      
+      $block['content']['#attached']['js'][] = drupal_get_path('module', 'hooklist_angular') . '/angular-animate.js';
+
       // Add angular-highlightjs.min.js
-      $block['content']['#attached']['js'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/angular-highlightjs.min.js';
-      
+      $block['content']['#attached']['js'][] = drupal_get_path('module', 'hooklist_angular') . '/angular-highlightjs.min.js';
+
       // Add a JS file to handle client side script using angular.
-      $block['content']['#attached']['js'][] = 
-        drupal_get_path('module', 'hooklist_angular') . '/hooklist_angular.js';
+      $block['content']['#attached']['js'][] = drupal_get_path('module', 'hooklist_angular') . '/hooklist_angular.js';
   }
-  
+
   return $block;
 }
 
@@ -203,6 +196,6 @@ function hooklist_angular_theme($existing, $type, $theme, $path) {
       'template' => 'hooklist-angular-listing',
     ),
   );
-  
+
   return $themes;
 }

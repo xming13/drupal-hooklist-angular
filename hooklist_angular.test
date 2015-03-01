@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Tests for the hooklist module
@@ -6,13 +7,8 @@
  * To speed up testing,
  * refer to http://tiger-fish.com/blog/speeding-simpletest-drupal-7
  */
-
 class HookListAngularTestCase extends DrupalWebTestCase {
-  
-  public function setUp() {
-    parent::setUp('hooklist_angular');  
-  }
-  
+
   public static function getInfo() {
     return array(
       'name' => 'HookList Angular module block functionality',
@@ -20,24 +16,25 @@ class HookListAngularTestCase extends DrupalWebTestCase {
       'group' => 'HookListAngular',
     );
   }
-  
+
+  public function setUp() {
+    $modules[] = 'hooklist_angular';
+    parent::setUp($modules);
+  }
+
   public function testBlockInfo() {
     $info = module_invoke('hooklist_angular', 'block_info');
-    
-    $this->assertEqual(1, count($info),
-      t('Module defines a block.'));
-    
-    $this->assertTrue(isset($info['list_hooks']),
-      t('Hook list exists.'));
+
+    $this->assertEqual(1, count($info), t('Module defines a block.'));
+
+    $this->assertTrue(isset($info['list_hooks']), t('Hook list exists.'));
   }
-  
+
   public function testBlockView() {
     $data = module_invoke('hooklist_angular', 'block_view', 'list_hooks');
-    
-    $this->assertTrue(is_array($data),
-      t('Block returns renderable array.'));
-    
-    $this->assertEqual(t('List of Commonly Used Hooks'), $data['subject'], 
-      t('Subject is set.'));
+
+    $this->assertTrue(is_array($data), t('Block returns renderable array.'));
+
+    $this->assertEqual(t('List of Commonly Used Hooks'), $data['subject'], t('Subject is set.'));
   }
 }

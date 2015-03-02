@@ -6,10 +6,10 @@
 ?>
 <div ng-app="hookApp" ng-controller="HookCtrl">
     <div class="panel-search">
-        Hook Name: <input ng-model="search.name">
+        Hook Name: <input ng-model="hookname.name">
 
         <span class="category-label">Category:</span>
-        <select ng-model="search.category" 
+        <select ng-model="hookcategory.category" 
               ng-options="hook.category as hook.category for hook in hooks | unique: 'category'">
             <option value="">-- Choose category --</option>
         </select>
@@ -22,7 +22,7 @@
         </ul>
     </div>
     
-    <div ng-repeat="hook in hooks | filter:search:filterCheck" ng-hide="hook.hidden"
+    <div ng-repeat="hook in hooks | filter: hookname | filter: hookcategory:filterCheck" ng-hide="hook.hidden"
          id="{{getValidId(hook.name)}}" class="hooklist-hook" >
         <h2><a ng-href="{{hook.url}}" target="_blank">{{hook.name}}</a></h2>
 

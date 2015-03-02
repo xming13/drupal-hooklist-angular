@@ -102,7 +102,7 @@ hookApp.controller('HookCtrl', function($scope, $http, $sce) {
             return true;
         }
         return angular.equals(actual, expected); 
-    }
+    };
     
 //    $scope.hooks = [
 //        {
